@@ -9,7 +9,7 @@ var app = {
 
 		launchDemoButton.addEventListener('click', this.demo, false);*/
 		alert('hola');
-		this.demo();
+		app.demo();
 	},
 	
 	demo: function() {
