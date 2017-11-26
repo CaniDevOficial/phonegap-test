@@ -5,10 +5,11 @@ var app = {
     },
 
     onDeviceReady: function() {
-		var launchDemoButton = document.getElementById('demo');
+		/*var launchDemoButton = document.getElementById('demo');
 
-		launchDemoButton.addEventListener('click', this.demo, false);
+		launchDemoButton.addEventListener('click', this.demo, false);*/
 		alert('hola');
+		this.demo();
 	},
 	
 	demo: function() {
