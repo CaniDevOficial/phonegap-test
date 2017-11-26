@@ -7,7 +7,7 @@ var app = {
     onDeviceReady: function() {
 		var launchDemoButton = document.getElementById('demo');
 		launchDemoButton.addEventListener('click', function() {
-			app.demo;
+			app.demo();
 			return false;
 		});
 	},
