@@ -16,22 +16,21 @@
         CaniDev
     </author>
 
-    <!--
-        Enable individual API permissions by defining each here.
-        The 'device' permission is required for the 'deviceready' event.
-    -->
-    <feature name="http://api.phonegap.com/1.0/device" />
-
     <!-- Customize your app and platform with the preference element. -->
 	<preference name="phonegap-version" 			value="cli-6.5.0" />
 	<preference name="fullscreen" 					value="false" />
     <preference name="orientation"                	value="default" />        <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              	value="universal" />      <!-- all: possible values handset, tablet, or universal -->
-    <preference name="android-minSdkVersion"      	value="7" />             <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
 	<preference name="android-installLocation"    	value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
-
+	<preference name="permissions" value="none"/>
+   
+   <!--
+        Enable individual API permissions by defining each here.
+        The 'device' permission is required for the 'deviceready' event.
+    -->
+    <feature name="http://api.phonegap.com/1.0/device" />
+	<feature name="http://api.phonegap.com/1.0/camera"/>
+	
     <!-- Plugins can also be added here. -->
-    <plugin name="phonegap-plugin-barcodescanner">
-		<param name="CAMERA_USAGE_DESCRIPTION" value="To scan barcodes." />
-	</plugin>
+    <plugin name="phonegap-plugin-barcodescanner" />
 </widget>
