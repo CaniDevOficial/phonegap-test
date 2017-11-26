@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.canidev.barcode-test"
+        version   = "1.0.0">
+
+    <name>Legends</name>
+
+    <description>
+        Test
+    </description>
+
+    <author href="https://www.canidev.com" email="contact@canidev.com">
+        CaniDev
+    </author>
+
+    <!--
+        Enable individual API permissions by defining each here.
+        The 'device' permission is required for the 'deviceready' event.
+    -->
+    <feature name="http://api.phonegap.com/1.0/device" />
+
+    <!-- Customize your app and platform with the preference element. -->
+    <preference name="orientation"                value="default" />        <!-- all: default means both landscape and portrait are enabled -->
+    <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
+    <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
+    <preference name="android-minSdkVersion"      value="7" />             <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
+	<preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
+
+    <!-- Plugins can also be added here. -->
+    <plugin name="phonegap-plugin-barcodescanner" />
+		<param name="CAMERA_USAGE_DESCRIPTION" value="To scan barcodes." />
+	</plugin>
+</widget>
