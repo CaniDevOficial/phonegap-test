@@ -13,6 +13,7 @@ var app = {
 	},
 	
 	demo: function() {
+		console.log(cordova.plugins);
 		cordova.plugins.barcodeScanner.scan(
 			function (result) {
 				alert("We got a barcode\n" +
