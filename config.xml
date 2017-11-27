@@ -14,7 +14,7 @@
         CaniDev
     </author>
 	
-	<icon src="icon.png" platform="android" width="120" height="120" />
+	<icon src="icon.png" platform="android" density="hdpi" />
 
     <!-- Customize your app and platform with the preference element. -->
 	<preference name="phonegap-version" 			value="cli-7.0.1" />
