@@ -3,18 +3,18 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.canidev.barcode-test"
+        id        = "com.canidev.juguettos-test"
         version   = "1.0.0">
 
-    <name>Legends</name>
+    <name>Juguettos</name>
 
-    <description>
-        Test
-    </description>
+    <description></description>
 
     <author href="https://www.canidev.com" email="contact@canidev.com">
         CaniDev
     </author>
+	
+	<icon src="icon.png" platform="android" width="120" height="120" />
 
     <!-- Customize your app and platform with the preference element. -->
 	<preference name="phonegap-version" 			value="cli-7.0.1" />

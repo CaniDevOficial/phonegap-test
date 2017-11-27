@@ -43,13 +43,27 @@ td.title {
 @media only screen and (max-width: 600px) {
 	td {
 		display: block;
+		border-bottom-width: 0px;
+	}
+	
+	tr:last-child td.barcode {
+		border-bottom-width: 1px;
 	}
 	
 	td.ref { display: none; }
 	dfn { display: block; }
 	
-	td.title { border-bottom: none; }
-	td.barcode { border-top: none; }
+	td.title {
+		font-size: 14px;
+		font-weight: bold;
+	}
 	
-	img { width: 50%; }
+	td.barcode {
+		border-top: none;
+		padding: 0;
+	}
+	
+	.barcode-model {
+		display: none;
+	}
 }

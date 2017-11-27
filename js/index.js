@@ -1,9 +1,10 @@
 
 var app = {
 	rspUrl: 'https://www.canidev.com/barcode/jsonrpc.php',
+	currentBarcode: null,
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-		//document.addEventListener('DOMContentLoaded', this.onDeviceReady, false);
+		document.addEventListener('DOMContentLoaded', this.onDeviceReady, false);
     },
 
     onDeviceReady: function() {
@@ -25,10 +26,10 @@ var app = {
 					var $table = $('<table></table>').appendTo('.app');
 					
 					$.each(data.items, function(i, row) {
-						$table.append('<tr>' +
+						$table.append('<tr data-id="' + i + '">' +
 							'<td class="title">' + row.name + '<dfn>Ref: ' + row.ref + '</dfn></td>' +
 							'<td class="ref">' + row.ref + '</td>' +
-							'<td class="barcode"><canvas id="barcode-model-' + i + '"></canvas></td>' +
+							'<td class="barcode"><div class="barcode-model"><canvas id="barcode-model-' + i + '"></canvas></div></td>' +
 						'</tr>');
 						
 						JsBarcode('#barcode-model-' + i, row.ean, {
@@ -36,6 +37,39 @@ var app = {
 							lineColor: '#000',
 							height: 35
 						});
+					});
+					
+					$('td.title').click(function(e) {
+						e.preventDefault();
+						
+						if($(window).width() <= 600)
+						{
+							var $parent	= $(this).parent(),
+								$id		= $parent.attr('data-id');
+							
+							if(app.currentBarcode == $id)
+							{
+								$parent.find('.barcode-model').slideUp();
+								app.currentBarcode = null;
+							}
+							else
+							{
+								if(app.currentBarcode)
+								{
+									$('tr[data-id="' + app.currentBarcode + '"]').find('.barcode-model').slideUp();
+								}
+								
+								$parent.find('.barcode-model').slideDown();
+								app.currentBarcode = $id;
+							}
+						}
+					});
+					
+					$(window).resize(function() {
+						if($(this).width() > 600)
+						{
+							$('.barcode-model').removeAttr('style');
+						}
 					});
 				}
 			},
