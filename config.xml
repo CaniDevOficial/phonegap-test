@@ -14,7 +14,12 @@
         CaniDev
     </author>
 	
-	<icon src="icon.png" platform="android" density="hdpi" />
+    <!-- Define app icon -->
+    <icon src="res/icon/icon.png" />
+    <icon src="res/icon/icon-36-ldpi.png"   platform="android"    density="ldpi" />
+    <icon src="res/icon/icon-48-mdpi.png"   platform="android"    density="mdpi" />
+    <icon src="res/icon/icon-72-hdpi.png"   platform="android"    density="hdpi" />
+    <icon src="res/icon/icon-96-xhdpi.png"  platform="android"    density="xhdpi" />
 
     <!-- Customize your app and platform with the preference element. -->
 	<preference name="phonegap-version" 			value="cli-7.0.1" />

@@ -56,7 +56,7 @@ var app = {
 							{
 								if(app.currentBarcode)
 								{
-									$('tr[data-id="' + app.currentBarcode + '"]').find('.barcode-model').slideUp();
+									$('tr[data-id="' + app.currentBarcode + '"]').find('.barcode-model').hide();
 								}
 								
 								$parent.find('.barcode-model').slideDown();
