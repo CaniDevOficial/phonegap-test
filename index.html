@@ -5,12 +5,39 @@
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="msapplication-tap-highlight" content="no" />
 	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	
+	<title>Juguettos</title>
+	
 	<link rel="stylesheet" type="text/css" href="css/index.css" />
-	<title>Hello World</title>
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 </head>
 <body>
+	<ul class="toolbar">
+		<li><a href="#" data-tab="list" data-method="loadList"><i class="fa fa-list"></i></a></li>
+		<li><a href="#" data-tab="new" data-method="bindSubmit"><i class="fa fa-plus"></i></a></li>
+	</ul>
+
 	<div class="app">
-		Cargando....
+		<div class="tab-content" id="tab-list"></div>
+		
+		<div class="tab-content" id="tab-new">
+			<form>
+				<dl>
+					<dt>Descripción:</dt>
+					<dd><input type="text" name="desc" tabindex="3" value="" /></dd>
+				</dl>
+				<dl>
+					<dt>Referencia:</dt>
+					<dd><input type="text" name="ref" tabindex="2" value="" /></dd>
+				</dl>
+				<dl>
+					<dt>EAN:</dt>
+					<dd><input type="number" name="ean" tabindex="1" value="" /></dd>
+				</dl>
+
+				<button type="button" class="submit-button">Añadir</button>
+			</form>
+		</div>
 	</div>
 
 	<script type="text/javascript" src="cordova.js"></script>

@@ -3,25 +3,62 @@
 	font-family: Arial;
 	font-size: 12px;
 	-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+
+    margin: 0;
+    padding: 0;
 }
 
-/*body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold /
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit /
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' /
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-attachment:fixed;
-    height:100%;
-    margin:0;
-    padding:0;
-    width:100%;
-}*/
+.toolbar {
+	background: #4261a5;
+	display: block;
+	height: 40px;
+}
+
+.toolbar li {
+	display: inline-block;
+	list-style-type: none;
+	margin-right: 5px;
+}
+
+.toolbar a {
+	color: #FFFFFF;
+	display: block;
+	font-size: 18px;
+	height: 30px;
+	padding-top: 10px;
+	text-decoration: none;
+	width: 40px;
+	text-align: center;
+}
+
+.toolbar a.active {
+	background: #213c6b;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.app, .loading {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+    right: 0;
+	top: 40px;
+}
+
+.app {
+	overflow: auto;
+}
+
+.loading {
+	background: rgba(255, 255, 255, 0.6) url('../res/spinner-blue-26x26.gif') 50% 30% no-repeat;
+	z-index: 2;
+}
 
 dfn {
-	display: none;
+	display: block;
 	font-size: 10px;
+	padding-left: 5px;
 }
 
 table {
@@ -30,14 +67,68 @@ table {
 }
 
 td {
-	border: 1px solid black;
+	border: 1px solid #ccc;
 	padding: 8px;
 	text-align: center;
 }
 
 td.title {
+	position: relative;
 	text-align: left;
 	text-transform: uppercase;
+}
+
+.row-delete {
+	display: none;
+	position: absolute;
+	right: 6px;
+	top: 6px;
+	font-size: 18px;
+	color: #000;
+	padding: 4px 6px;
+}
+
+dl {
+	display: block;
+	margin: 15px;
+}
+
+.tab-content input {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.submit-button {
+	background: #EAEDF1;
+    background: linear-gradient(to bottom, #fff, #EAEDF1);
+    background: -moz-linear-gradient(top, #FFFFFF, #EAEDF1);
+    background: -webkit-gradient(linear, 0 0, 0 25, from(#fff), to(#EAEDF1));
+    background: -o-linear-gradient(top, #FFFFFF, #EAEDF1);
+    border: 1px solid #CCC;
+    color: #000;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    min-width: 40px;
+    padding: 8px 10px;
+    text-align: center;
+    text-shadow: #FFFFFF 0.1em 0.1em 0.2em;
+    width: auto;
+}
+
+.submit-button:hover {
+	background: #FAFAFA;
+    border-color: #CCC;
+    color: #000;
+    text-shadow: none;
+}
+
+input, button {
+	outline: 0;
 }
 
 @media only screen and (max-width: 600px) {
@@ -51,7 +142,6 @@ td.title {
 	}
 	
 	td.ref { display: none; }
-	dfn { display: block; }
 	
 	td.title {
 		font-size: 14px;
