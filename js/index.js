@@ -47,7 +47,7 @@ $.fn.serializeObject = function(strip) {
 };
 
 var app = {
-	rspUrl: '*********/jsonrpc.php',
+	rspUrl: '**********/jsonrpc.php',
 	currentBarcode: null,
     initialize: function() {
         //document.addEventListener('deviceready', this.onDeviceReady, false);
