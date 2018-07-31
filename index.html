@@ -13,32 +13,118 @@
 </head>
 <body>
 	<ul class="toolbar">
+		<li class="history-trigger hidden"><a href="#" data-method="history"><i class="fa fa-arrow-left"></i></a></li>
 		<li><a href="#" data-tab="list" data-method="loadList"><i class="fa fa-list"></i></a></li>
-		<li><a href="#" data-tab="new" data-method="bindSubmit"><i class="fa fa-plus"></i></a></li>
+		<li><a href="#" data-tab="search" data-method="search"><i class="fa fa-search"></i></a></li>
+		<li><a href="#" data-tab="item" data-method="add"><i class="fa fa-plus"></i></a></li>
+		
+		<li class="filter-trigger rightside hidden"><a href="#" data-method="filter"><i class="fa fa-filter"></i></a></li>
 	</ul>
 
 	<div class="app">
 		<div class="tab-content" id="tab-list"></div>
 		
-		<div class="tab-content" id="tab-new">
+		<div class="tab-content" id="tab-search">
 			<form>
 				<dl>
-					<dt>Descripción:</dt>
-					<dd><input type="text" name="desc" tabindex="3" value="" /></dd>
+					<dt>EAN:</dt>
+					<dd class="input-group">
+						<input type="number" name="ean" tabindex="1" value="" />
+						<button type="button" class="js-ean-input btn"><i class="fa fa-barcode"></i></button>
+					</dd>
 				</dl>
 				<dl>
 					<dt>Referencia:</dt>
 					<dd><input type="text" name="ref" tabindex="2" value="" /></dd>
 				</dl>
 				<dl>
-					<dt>EAN:</dt>
-					<dd><input type="number" name="ean" tabindex="1" value="" /></dd>
+					<dt>Ubicación:</dt>
+					<dd><input type="text" name="location" tabindex="3" value="" data-check="simple" /></dd>
 				</dl>
+				<dl>
+					<dt>Descripción:</dt>
+					<dd><input type="text" name="desc" tabindex="4" value="" /></dd>
+				</dl>
+				<button type="button" class="submit-button btn">Buscar</button>
+			</form>
+		</div>
 
-				<button type="button" class="submit-button">Añadir</button>
+		<div class="tab-content" id="tab-item">
+			<form>
+				<dl>
+					<dt>EAN:</dt>
+					<dd class="input-group">
+						<input type="number" name="ean" tabindex="1" value="" />
+						<button type="button" class="js-ean-input btn"><i class="fa fa-barcode"></i></button>
+					</dd>
+				</dl>
+				<dl>
+					<dt>Referencia:</dt>
+					<dd><input type="text" name="ref" tabindex="2" value="" /></dd>
+				</dl>
+				<dl>
+					<dt>Ubicación:</dt>
+					<dd><input type="text" name="location" tabindex="4" value="" data-check="full" /></dd>
+				</dl>
+				<dl>
+					<dt>Descripción:</dt>
+					<dd><input type="text" name="desc" tabindex="3" value="" /></dd>
+				</dl>
+				<button type="button" class="submit-button btn">Guardar</button>
 			</form>
 		</div>
 	</div>
+	
+	<script type="text/html" id="tpl-item-row">
+		<tr data-id="%id%">
+			<td class="title">
+				<span>%desc%</span>
+				<dfn>Ref: %ref%</dfn>
+				<dfn>Ubicación: %location%</dfn>
+				<div class="row-actions">
+					<a href="#" data-action="edit" data-id="%id%"><i class="fa fa-pencil"></i></a>
+					<a href="#" data-action="delete" data-id="%id%"><i class="fa fa-trash"></i></a>
+				</div>
+			</td>
+			<td class="barcode"><div class="barcode-model"><canvas id="barcode-model-%id%"></canvas></div></td>
+		</tr>
+	</script>
+	
+	<script type="text/html" id="tpl-location-keyboard">
+		<div class="dialog-overlay">
+			<div class="dialog">
+				<div class="dialog-content">
+					<div class="input-group keyboard-result">
+						<input type="text" id="keyboard-result" value="" readonly />
+						<button class="btn" data-action="backspace"><i class="fa fa-long-arrow-left"></i></button>
+					</div>
+					<div class="keyboard-buttons"></div>
+				</div>
+				<div class="dialog-submit">
+					<button type="button" class="btn" data-action="submit">Ok</button>
+					<button type="button" class="btn" data-action="close">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script type="text/html" id="tpl-filter-menu">
+		<div class="dialog-overlay">
+			<div class="dialog">
+				<div class="dialog-content">
+					<h2>Ordenar por</h2>
+					
+					<label><input type="radio" name="order" value="desc" /> Descripción</label>
+					<label><input type="radio" name="order" value="ean" /> EAN</label>
+					<label><input type="radio" name="order" value="ref" /> Referencia</label>
+					<label><input type="radio" name="order" value="location" /> Ubicación</label>
+				</div>
+				<div class="dialog-submit">
+					<button type="button" class="btn" data-action="close">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</script>
 
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/jquery.js"></script>

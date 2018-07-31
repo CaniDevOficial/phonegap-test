@@ -3,7 +3,7 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.canidev.juguettos-test"
+        id        = "com.canidev.juguettos"
         version   = "1.0.0">
 
     <name>Juguettos</name>
@@ -33,7 +33,8 @@
    <!--
         Enable individual API permissions by defining each here.
         The 'device' permission is required for the 'deviceready' event.
-    -->
+	-->
+   
     <feature name="http://api.phonegap.com/1.0/device" />
 	<feature name="http://api.phonegap.com/1.0/camera"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
@@ -42,5 +43,5 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="6.0.5" />
 	<plugin name="cordova-plugin-whitelist" />
 	
-	<access origin="https://www.canidev.com" />
+	<access origin="*" />
 </widget>
