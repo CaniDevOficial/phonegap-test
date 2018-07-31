@@ -183,7 +183,7 @@ var JSON_STATUS_ERROR		= 1,
 })(jQuery);
 
 var app = {
-	rspUrl				: 'http://localhost/barcode/jsonrpc.php',
+	rspUrl				: 'https://www.canidev.com/juguettos/jsonrpc.php',
 	currentBarcode		: null,
 	historyController	: {},
 	listParams			: {},
