@@ -92,62 +92,73 @@ var JSON_STATUS_ERROR		= 1,
 		};
 
 		$(this)
-			.off('focus')
-			.on('focus', function() {
-				var tpl 		= app.template.get('location-keyboard', null, true).appendTo('body'),
-					target		= $(this),
-					keyboard	= tpl.find('.keyboard-buttons');
-					
-				checkLevel = $(this).attr('data-check') || 'full';
+			.off('click focus')
+			.on({
+				focus : function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+				},
 				
-				// Append number buttons
-				for(var i = 0; i < 10; i++)
-				{
-					keyboard.append('<button class="btn" data-action="char">' + i + '</button>');
-				}
-				
-				// Append letter buttons
-				keyboard.append('<br /><br />');
-				
-				var s = String('a').charCodeAt(0),
-					e = String('l').charCodeAt(0);
-
-				for(; s <= e; ++s)
-				{
-					var charCode = String.fromCharCode(s).toUpperCase();
-					keyboard.append('<button class="btn" data-action="char">' + charCode + '</button>');
-				}
-				
-				tpl.find('button').click(function(e) {
+				click: function(e) {
 					e.preventDefault();
 					
-					switch($(this).attr('data-action'))
+					app.closeDialog();
+	
+					var tpl 		= app.template.get('location-keyboard', null, true).appendTo('body'),
+						target		= $(this),
+						keyboard	= tpl.find('.keyboard-buttons');
+						
+					checkLevel = $(this).attr('data-check') || 'full';
+					
+					// Append number buttons
+					for(var i = 0; i < 10; i++)
 					{
-						case 'char':
-							insertChar($(this).text());
-						break;
-						
-						case 'backspace':
-							insertChar(8);
-						break;
-						
-						case 'submit':
-							var resultDom = $('#keyboard-result')
-							
-							if(resultDom.is('.error') || !resultDom.val())
-							{
-								return false;
-							}
-
-							target.val(resultDom.val());
-						
-						// no break
-						
-						case 'close':
-							app.closeDialog();
-						break;
+						keyboard.append('<button class="btn" data-action="char">' + i + '</button>');
 					}
-				});
+					
+					// Append letter buttons
+					keyboard.append('<br /><br />');
+					
+					var s = String('a').charCodeAt(0),
+						e = String('l').charCodeAt(0);
+
+					for(; s <= e; ++s)
+					{
+						var charCode = String.fromCharCode(s).toUpperCase();
+						keyboard.append('<button class="btn" data-action="char">' + charCode + '</button>');
+					}
+					
+					tpl.find('button').click(function(e) {
+						e.preventDefault();
+						
+						switch($(this).attr('data-action'))
+						{
+							case 'char':
+								insertChar($(this).text());
+							break;
+							
+							case 'backspace':
+								insertChar(8);
+							break;
+							
+							case 'submit':
+								var resultDom = $('#keyboard-result')
+								
+								if(resultDom.is('.error') || !resultDom.val())
+								{
+									return false;
+								}
+
+								target.val(resultDom.val());
+							
+							// no break
+							
+							case 'close':
+								app.closeDialog();
+							break;
+						}
+					});
+				}
 			});
 			
 		function insertChar(charCode)
