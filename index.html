@@ -15,6 +15,7 @@
 	<ul class="toolbar">
 		<li class="history-trigger hidden"><a href="#" data-method="history"><i class="fa fa-arrow-left"></i></a></li>
 		<li><a href="#" data-tab="list" data-method="loadList"><i class="fa fa-list"></i></a></li>
+		<li><a href="#" data-tab="list" data-method="stateList"><i class="fa fa-eye-slash"></i></a></li>
 		<li><a href="#" data-tab="search" data-method="search"><i class="fa fa-search"></i></a></li>
 		<li><a href="#" data-tab="item" data-method="add"><i class="fa fa-plus"></i></a></li>
 		
@@ -22,7 +23,11 @@
 	</ul>
 
 	<div class="app">
-		<div class="tab-content" id="tab-list"></div>
+		<div class="tab-content" id="tab-list">
+			<div class="inner"></div>
+			
+			<button type="button" class="submit-button btn hidden js-show-more"><i class="fa fa-plus"></i> Cargar más</button>
+		</div>
 		
 		<div class="tab-content" id="tab-search">
 			<form>
@@ -70,24 +75,34 @@
 					<dt>Descripción:</dt>
 					<dd><input type="text" name="desc" tabindex="3" value="" /></dd>
 				</dl>
+				<dl>
+					<dt>Estado:</dt>
+					<dd>
+						<select name="legible" tabindex="4">
+							<option value="1">Se puede leer</option>
+							<option value="0">No pasa</option>
+						</select>
+					</dd>
+				</dl>
 				<button type="button" class="submit-button btn">Guardar</button>
 			</form>
 		</div>
 	</div>
 	
 	<script type="text/html" id="tpl-item-row">
-		<tr data-id="%id%">
-			<td class="title">
+		<div class="row" data-id="%id%" data-legible="%legibleStr%">
+			<div class="row-title">
 				<span>%desc%</span>
 				<dfn>Ref: %ref%</dfn>
 				<dfn>Ubicación: %location%</dfn>
 				<div class="row-actions">
-					<a href="#" data-action="edit" data-id="%id%"><i class="fa fa-pencil"></i></a>
-					<a href="#" data-action="delete" data-id="%id%"><i class="fa fa-trash"></i></a>
+					<a href="#" data-action="state"><i class="fa"></i></a>
+					<a href="#" data-action="edit"><i class="fa fa-pencil"></i></a>
+					<a href="#" data-action="delete"><i class="fa fa-trash"></i></a>
 				</div>
-			</td>
-			<td class="barcode"><div class="barcode-model"><canvas id="barcode-model-%id%"></canvas></div></td>
-		</tr>
+			</div>
+			<div class="row-barcode"><canvas id="barcode-model-%id%"></canvas></div>
+		</div>
 	</script>
 	
 	<script type="text/html" id="tpl-location-keyboard">
@@ -101,8 +116,8 @@
 					<div class="keyboard-buttons"></div>
 				</div>
 				<div class="dialog-submit">
-					<button type="button" class="btn" data-action="submit">Ok</button>
-					<button type="button" class="btn" data-action="close">Cancel</button>
+					<button type="button" class="btn" data-action="submit">Aceptar</button>
+					<button type="button" class="btn" data-action="close">Cancelar</button>
 				</div>
 			</div>
 		</div>
@@ -120,7 +135,7 @@
 					<label><input type="radio" name="order" value="location" /> Ubicación</label>
 				</div>
 				<div class="dialog-submit">
-					<button type="button" class="btn" data-action="close">Cancel</button>
+					<button type="button" class="btn" data-action="close">Cancelar</button>
 				</div>
 			</div>
 		</div>

@@ -28,7 +28,7 @@ a:hover {
 .toolbar {
 	background: #4261a5;
 	display: block;
-	height: 40px;
+	height: 42px;
 }
 
 .toolbar li {
@@ -41,10 +41,10 @@ a:hover {
 	color: #FFFFFF;
 	display: block;
 	font-size: 18px;
-	height: 40px;
+	height: 42px;
 	padding-top: 10px;
 	text-decoration: none;
-	width: 40px;
+	width: 42px;
 	text-align: center;
 }
 
@@ -60,7 +60,7 @@ a:hover {
 	left: 0;
 	position: absolute;
     right: 0;
-	top: 40px;
+	top: 42px;
 }
 
 .app {
@@ -78,45 +78,55 @@ dfn {
 	padding-left: 5px;
 }
 
-table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-td {
-	border: 1px solid #ccc;
+.row {
+	border-bottom: 1px solid #ccc;
 	padding: 8px;
 	text-align: center;
 }
 
-td.title {
+.row:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.row-title {
+	float: left;
 	position: relative;
 	text-align: left;
 	text-transform: uppercase;
+    width: 49%;
 }
 
-td.title > span {
+.row-title > span {
 	display: block;
+	font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+	width: 90%;
 }
 
-td.title.active > span {
-    width: 80%;
+.row-title.active > span {
+    width: 70%;
 }
 
 .row-actions {
 	display: block;
 	position: absolute;
 	right: 6px;
-	top: 6px;
+	top: 0;
 	font-size: 18px;
-	padding: 4px 6px;
 }
 
 .row-actions a {
 	margin-left: 10px;
+}
+
+.row-barcode {
+	float: right;
+	text-align: center;
+	width: 49%;
 }
 
 dl {
@@ -125,7 +135,8 @@ dl {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+select {
     display: block;
     width: 100%;
     padding: 6px;
@@ -166,7 +177,7 @@ input.error {
 	margin: 20px auto;
 }
 
-input, button {
+input, button, select {
 	outline: 0;
 	vertical-align: middle;
 }
@@ -201,6 +212,20 @@ label {
 .message {
 	text-align: center;
     margin-top: 30px;
+}
+
+/* States
+--------------------------------- */
+[data-legible="no"] {
+	border-left: 2px solid red;
+}
+
+[data-legible="no"] [data-action="state"] i:before {
+	content: "\f06e";
+}
+
+[data-legible="yes"] [data-action="state"] i:before {
+	content: "\f070";
 }
 
 /* Dialog
@@ -265,33 +290,18 @@ label {
 /* Responsive
 --------------------------------- */
 @media only screen and (max-width: 600px) {
-	td {
-		display: block;
-		border-bottom-width: 0px;
+	.row-title,
+	.row-barcode {
+		float: none;
+		width: auto;
 	}
 	
-	tr:last-child td.barcode {
-		border-bottom-width: 1px;
-	}
-	
-	td.ref { display: none; }
-	
-	td.title {
-		font-size: 14px;
-		font-weight: bold;
-	}
-	
-	td.barcode {
-		border-top: none;
-		padding: 0;
-	}
-	
-	.barcode-model,
-	.row-actions	{
+	.row-barcode,
+	.row-actions {
 		display: none;
 	}
 
-	td.title.active > .row-actions {
+	.row-title.active > .row-actions {
 		display: block;
 	}
 }

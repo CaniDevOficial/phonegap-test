@@ -184,6 +184,7 @@ var JSON_STATUS_ERROR		= 1,
 
 var app = {
 	rspUrl				: 'https://www.canidev.com/juguettos/jsonrpc.php',
+	//rspUrl				: 'http://localhost/barcode/jsonrpc.php',
 	currentBarcode		: null,
 	historyController	: {},
 	listParams			: {},
@@ -264,6 +265,15 @@ var app = {
 				}
 			})
 			.filter('[data-tab]:first').click();
+			
+		$('.js-show-more').click(function(e) {
+			e.preventDefault();
+
+			app.loadList($('#tab-list'), {
+				params		: app.listParams,
+				overwrite	: false
+			});
+		});
 	},
 	
 	add: function(tabDom) {
@@ -303,7 +313,7 @@ var app = {
 			var input = $(this).siblings('input');
 
 			input.val(result.text);
-			$form.submit();
+			tabDom.find('.submit-button').click();
 		});
 		
 		tabDom.find('[name="location"]').locationKeyboard();
@@ -339,19 +349,17 @@ var app = {
 				app.setContent(tabDom);
 			}
 			
+			var listContent = tabDom.children('.inner');
+			
 			if(options.overwrite)
 			{
-				tabDom.html('');
+				listContent.html('');
 			}
 
 			if(data.items && data.items.length)
 			{
-				tabDom.append('<table></table>');
-
-				var $table = tabDom.children('table');
-
 				$.each(data.items, function(i, row) {
-					$table.append(app.template.get('item-row', row));
+					listContent.append(app.template.get('item-row', row));
 					
 					JsBarcode('#barcode-model-' + row.id, row.ean, {
 						fontSize: 11,
@@ -378,8 +386,23 @@ var app = {
 			}
 			else
 			{
-				tabDom.append('<div class="message">' + (data.message || 'No hay elementos para mostrar') + '</div>');
+				listContent.append('<div class="message">' + (data.message || 'No hay elementos para mostrar') + '</div>');
 			}
+			
+			if(data.params.haveMore)
+			{
+				tabDom.find('.js-show-more').objView(true);
+			}
+			else
+			{
+				tabDom.find('.js-show-more').objView(false);
+			}
+		});
+	},
+	
+	stateList: function(tabDom) {
+		app.loadList(tabDom, {
+			params	: { legible: 0 }
 		});
 	},
 	
@@ -445,9 +468,9 @@ var app = {
 	},
 	
 	bindItemRows: function(tabDom) {
-		tabDom.find('td.title > span, .row-actions a').off('click');
-		
-		tabDom.find('td.title > span').click(function(e) {
+		tabDom.find('.row-title > span, .row-actions a').off('click');
+
+		tabDom.find('.row-title > span').click(function(e) {
 			e.preventDefault();
 			
 			if($(window).width() <= 600)
@@ -457,7 +480,7 @@ var app = {
 				
 				if(app.currentBarcode == $id)
 				{
-					$parent.find('.barcode-model').slideUp();
+					$parent.find('.row-barcode').slideUp();
 					$(this).parent().removeClass('active');
 					app.currentBarcode = null;
 				}
@@ -465,11 +488,11 @@ var app = {
 				{
 					if(app.currentBarcode)
 					{
-						$('tr[data-id="' + app.currentBarcode + '"]').find('.barcode-model').hide();
-						$('tr[data-id="' + app.currentBarcode + '"]').children('.title').removeClass('active');
+						$('.row[data-id="' + app.currentBarcode + '"]').find('.row-barcode').hide();
+						$('.row[data-id="' + app.currentBarcode + '"]').children('.row-title').removeClass('active');
 					}
 					
-					$parent.find('.barcode-model').slideDown();
+					$parent.find('.row-barcode').slideDown();
 					$(this).parent().addClass('active');
 					app.currentBarcode = $id;
 				}
@@ -479,7 +502,8 @@ var app = {
 		tabDom.find('.row-actions a').click(function(e) {
 			e.preventDefault();
 			
-			var $id = $(this).attr('data-id');
+			var row = $(this).closest('.row'),
+				$id = row.attr('data-id');
 			
 			switch($(this).attr('data-action'))
 			{
@@ -487,7 +511,7 @@ var app = {
 					if(confirm('¿Desea eliminar este producto?'))
 					{
 						app.send('delete', {'id': $id}, false, false);
-						$('tr[data-id="' + app.currentBarcode + '"]').fadeOut();
+						$('.row[data-id="' + app.currentBarcode + '"]').fadeOut();
 					}
 				break;
 				
@@ -498,7 +522,7 @@ var app = {
 						var newTab = app.setContent('item');
 						
 						$.each(resp.items[0], function(key, value) {
-							newTab.find('input[name="' + key + '"]').val(value);
+							newTab.find('[name="' + key + '"]').val(value);
 						});
 						
 						newTab.find('.js-ean-input').barcodeReader(function(result) {
@@ -526,7 +550,7 @@ var app = {
 									tabDom = app.setContent('list');
 									
 									// Replace data in list
-									$('tr[data-id="' + row.id + '"]').replaceWith(app.template.get('item-row', row));
+									$('[data-id="' + row.id + '"]').replaceWith(app.template.get('item-row', row));
 			
 									JsBarcode('#barcode-model-' + row.id, row.ean, {
 										fontSize: 11,
@@ -540,6 +564,19 @@ var app = {
 
 						newTab.find('[name="location"]').locationKeyboard();
 					});
+				break;
+				
+				case 'state':
+					app.send(
+						'state',
+						{
+							id		: $id,
+							state	: (row.attr('data-legible') == 'yes') ? 0 : 1
+						}, 
+						function(resp) {
+							row.attr('data-legible', resp.items[0].legibleStr);
+						}
+					);
 				break;
 			}
 		});
@@ -581,7 +618,7 @@ var app = {
 				return input;
 			}
 
-			return input.replace(/%([a-z]+)%/g, function(x, p1) {
+			return input.replace(/%([a-zA-Z]+)%/g, function(x, p1) {
 				return (data[p1] !== undefined) ? data[p1] : '';
 			});
 		}
