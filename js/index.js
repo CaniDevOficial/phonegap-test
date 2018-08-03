@@ -93,6 +93,7 @@ var JSON_STATUS_ERROR		= 1,
 
 		$(this)
 			.off('click focus')
+			.prop('readonly', true)
 			.on({
 				focus : function(e) {
 					e.preventDefault();
@@ -101,6 +102,8 @@ var JSON_STATUS_ERROR		= 1,
 				
 				click: function(e) {
 					e.preventDefault();
+					
+					$(this).blur();
 					
 					app.closeDialog();
 	
